@@ -30,5 +30,6 @@ int main(){
 //Not a great approximation compared to online sources. 
 
 std::cout << "duckmount worked as intended" << std::endl;
+//commenting for git recognition
 
 }
