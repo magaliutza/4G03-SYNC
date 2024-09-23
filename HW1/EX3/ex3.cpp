@@ -9,7 +9,7 @@
 
 #include <iostream>
 #include <iomanip>
-#include <vector>
+#include <vector>	
 
 int main(){
 
@@ -25,7 +25,7 @@ int main(){
     
 	// Initiate the loop and refer to the vector object when asking for n=1 and n=0. 
     double jnew;
-	for (int i=0; i<20;i++){
+	for (int i=0; i<20; i++){
 		jnew = (2*i/0.5)*js[i+1]-js[i];
 		js.push_back(jnew);
 

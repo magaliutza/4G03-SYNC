@@ -6,12 +6,14 @@
 #include <vector>
 using namespace std;
 
-double bessel(double x, int o){
+double bessel(double x, int o, int N){
 	
-	// Function to calculate bessel func of order 'o' and 'x'.
+	// Function to calculate bessel func of order 'o' and 'x', with steps 'N'.
 
 	// 'N' is a variable so we can change how many order above what we want to calculate we start at without replacing stuff in the code manually.
-	int N = 5;
+	// 'N' should be 11 because in testing, this is the upper limit for maximum precision and minimum computation power. Any more repetitions are a waste.
+	//int N = 11;
+	//change
 	int order = N + o;
 
 	double js[order+1];
@@ -21,11 +23,11 @@ double bessel(double x, int o){
 	// n + 1 is the highest order which is 0, and n - 1 is the next decsended order.
 	for (int n = order - 1; n > 0; n--){
 
-		cout << "n: " << js[n] << ", n+1: " << js[n-1] << ", ord: " << n <<endl;
+		//cout << "n: " << js[n] << ", n+1: " << js[n-1] << ", ord: " << n <<endl;
 
 		// J_(n-1)(x) = (2n/x)J_n(x) - J_(n+1)(x)
 		js[n-1] = (2*(n)/x)*js[n] - js[n+1]; 
-		cout << js[n-1] << endl;
+		//cout << js[n-1] << endl;
 	}
 	// Let's do the normalization.
 	
@@ -35,7 +37,7 @@ double bessel(double x, int o){
 	sum += js[0];
 	while(j<=order){
 		sum+= 2*(js[j]);
-		cout << "J: " << j << " Sum: " << sum << endl;
+		//cout << "J: " << j << " Sum: " << sum << endl;
 		j+=2;
 	}
 	double besselval = js[o]/sum;
@@ -56,8 +58,15 @@ int main(){
 	cout << "Specify the order desired to calculate: ";
 	cin >> n; 
 	cout << "You are searching for the Bessel function of order " << n << " at x-value " << x << " or, " << endl << "J_" << n << "(" << x << ")" << endl; 
-	cout << "Result: " << setprecision(15) << bessel(x,n) <<endl;
+	cout << "Result: " << setprecision(15) << bessel(x,n,11) <<endl;
 
+	// int k = 1;
+	// while(k<20){
+
+	// 	cout << "k: " << k << " TO: " << bessel(0.5,0,k) << endl;
+	// 	k += 1;
+
+	// }
 }
 
 
