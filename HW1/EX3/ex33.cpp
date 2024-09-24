@@ -23,9 +23,7 @@ double bessel(double x, int o, int N){
 	// n + 1 is the highest order which is 0, and n - 1 is the next decsended order.
 	for (int n = order - 1; n > 0; n--){
 
-		//cout << "n: " << js[n] << ", n+1: " << js[n-1] << ", ord: " << n <<endl;
-
-		// J_(n-1)(x) = (2n/x)J_n(x) - J_(n+1)(x)
+		// J_(n-1)(x) = (2n/x)J_n(x) - J_(n+1)(x) --> TRANSLATE TO CODE!
 		js[n-1] = (2*(n)/x)*js[n] - js[n+1]; 
 		//cout << js[n-1] << endl;
 	}
@@ -58,15 +56,15 @@ int main(){
 	cout << "Specify the order desired to calculate: ";
 	cin >> n; 
 	cout << "You are searching for the Bessel function of order " << n << " at x-value " << x << " or, " << endl << "J_" << n << "(" << x << ")" << endl; 
-	cout << "Result: " << setprecision(15) << bessel(x,n,11) <<endl;
+	cout << "Result: " << setprecision(16) << bessel(0.5,0,11) <<endl;
 
-	// int k = 1;
-	// while(k<20){
+	int k = 1;
+	while(k<20){
 
-	// 	cout << "k: " << k << " TO: " << bessel(0.5,0,k) << endl;
-	// 	k += 1;
+		cout << "k: " << k << " TO: " << setprecision(16) << bessel(0.5,0,k) << endl;
+		k += 1;
 
-	// }
+	}
 }
 
 
