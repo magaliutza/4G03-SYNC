@@ -31,6 +31,8 @@ double local_Energy(int x, int y, spinvec& SpinConf, int L){
 
 	return neighbour_energy;
 }
+
+SUCKS TO SUCK
  
 
 void MCSweeps(int sweeps, double J, spinvec& SpinConf, int L, const unordered_map<int, float>& deltaE_exp){
