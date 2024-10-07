@@ -6,7 +6,7 @@
 
 using namespace std;
 
-// define our f(x) which we think is similar to the integral to be estimated.
+// define our f(x) which we'd like to integrate.
 double f_x(double x){
 	return exp(-x*x);
 }
