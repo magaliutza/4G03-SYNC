@@ -8,6 +8,7 @@
 #include <array>
 #include <vector>
 #include <unordered_map>
+using namespace std;
 
 template <class Type> class MCvar {
 
@@ -52,7 +53,7 @@ public:
         }
 
         double SqrAvrg(){
-            double res2 = 0.0;
+            double res2 = 0.0;  
             for (auto r : Bins) res2 += r*r;
             return (res2/no_of_bins);
 
@@ -69,6 +70,6 @@ public:
 
                 double SDOM = sqrt( (res2_avg - res_avg_sqr) / (no_of_bins - 1) );
 
-                return (SDOM);
+                return SDOM;
         }
 };
