@@ -1,5 +1,5 @@
 CXX = c++
-CFLAGS = -O2 -std=c++11
+CFLAGS = -O3 -std=c++11
 
 SQIsing: SQIsing.o MCSweeps.o
 	$(CXX) $(CFLAGS) SQIsing.o MCSweeps.o -o SQIsing

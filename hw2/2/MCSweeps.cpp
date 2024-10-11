@@ -13,6 +13,20 @@ int per(int coord, int L){
 }
 
 
+
+// SOS CODE
+
+// Function to get the periodic coordinate
+// int per(int coord, int L, vector<int>& periodicLookup) {
+//     cout << "per!" << endl;
+//     cout << coord << ", " << L << endl;
+//     cout << (coord + 2 * L) % (2 * L) << endl;
+//     cout << periodicLookup[0] << endl;
+//     return periodicLookup[(coord + 2 * L) % (2 * L)];
+// }
+
+
+
 // A type for the int array so that I don't call that whole line every time. 
 typedef vector<vector<int>> spinvec;  
 
@@ -23,6 +37,7 @@ double local_Energy(int x, int y, const spinvec& SpinConf, int L){
 
 	// Spin at the site investigated.
 	int spin = SpinConf[x][y];
+	//cout << "Spin check in local_Energy at " << x << ", " << y << ": " << spin << endl;
 
 	neighbour_energy += -1 * spin * ( 
 		SpinConf[x][per(y+1,L)] + 
@@ -63,8 +78,9 @@ for (int n = 0; n < sweeps; n++){
 		int x = coordrand(engine);
 		int y = coordrand(engine);
 		//cout << x << ", " << y << endl;
-
+		int spin = SpinConf[x][y];
 		// Find the local energy before a flip.
+		//cout << "loceng called for energy before at RAND." << endl;
 		double energy_before = local_Energy(x,y,SpinConf,L);
 		//cout << energy_before << endl;
 		// Flip the bit. Remember we flipped it. 
@@ -74,14 +90,17 @@ for (int n = 0; n < sweeps; n++){
 		//cout << energy_after << endl;
 		// Delta E calc.
 		double deltaE = energy_after - energy_before;
-		//cout << deltaE << endl;
+
+		
+		//cout << "deltaE: " << deltaE << endl;
+		//cout << "check: "  << energy_after - energy_before << endl;
 		// Lookup the exp with the energy value found.
 		double exp = deltaE_exp.at(deltaE);
-		//cout << exp << endl;
+		//cout << "exp: " << exp << endl;
 		double Prob_of_flip = min(1.0,exp);
-
+		//cout << "Prob_of_flip: " << Prob_of_flip << endl;
 		double r = linrand(engine);
-		//cout << r << endl;
+		//cout << "r:" << r << endl;
 		//cout << Prob_of_flip << endl;
 
 		// Remember the spin is already flipped. So if the flip check FAILS, we have to flip it back. Otherwise, move on.
@@ -90,7 +109,7 @@ for (int n = 0; n < sweeps; n++){
 			//cout << "ding!" << endl;
 		}
 		//else
-			//cout << "dong!" << endl;
+			//cout << "dong!" << endl << endl;
 
 	}
 
@@ -109,6 +128,7 @@ double Energy_lattice(const spinvec& SpinConf, int L){
 	}
 
 	energy = energy/2;
+	//cout << "energy from energy_lattice: " << energy << endl;
 	return energy;
 }
 
@@ -121,24 +141,31 @@ int Magnet_lattice(const spinvec& SpinConf, int L){
 			magnet += SpinConf[i][k];
 		}
 	}
-	//cout << magnet << endl;
+	//cout << "magnetization: " << magnet << endl;
 	return magnet;
+
 }
 
-void do_measurement(int L, const spinvec& SpinConf, MCvar<double>& E, MCvar<double>& E_2, MCvar<double>& E_4, MCvar<double>& M, MCvar<double>& M_2, MCvar<double>& M_4){
+void do_measurement(ofstream& output, int L, const spinvec& SpinConf, MCvar<double>& E, MCvar<double>& E_2, MCvar<double>& E_4, MCvar<double>& M, MCvar<double>& M_2, MCvar<double>& M_4){
+
+
 
 	double enrg = Energy_lattice(SpinConf, L);
 	//cout << "energy " << enrg << endl;
 	double mag = Magnet_lattice(SpinConf, L);
 	//cout << "mag " << mag << endl;
 	
+	output << mag << "," << endl;
+	
 	E.push(enrg);
+	//cout << "pushin E as... " << enrg << endl;
 	M.push(mag);
 	E_2.push(enrg*enrg);
 	M_2.push(mag*mag);
 	E_4.push(pow(enrg,4));
 	M_4.push(pow(mag,4));
 
+	//cout << "I've measured! " << endl;
 
 }
 

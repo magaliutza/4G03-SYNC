@@ -19,7 +19,9 @@ void MCSweeps(int sweeps, spinvec& SpinConf, int L, const unordered_map<int, dou
 double local_Energy(int x, int y, const spinvec& SpinConf, int L);
 double Energy_lattice(const spinvec& SpinConf, int L);
 int Magnet_lattice(const spinvec& SpinConf, int L);
-void do_measurement(int L, const spinvec& SpinConf, MCvar<double>& E, MCvar<double>& E_2, MCvar<double>& E_4, MCvar<double>& M, MCvar<double>& M_2, MCvar<double>& M_4);
+void do_measurement(ofstream& output, int L, const spinvec& SpinConf, MCvar<double>& E, MCvar<double>& E_2, MCvar<double>& E_4, MCvar<double>& M, MCvar<double>& M_2, MCvar<double>& M_4);
 int per(int coord, int L);
+extern vector<int> periodicLookup;
+
 
 #endif // MCSWEEPS_H

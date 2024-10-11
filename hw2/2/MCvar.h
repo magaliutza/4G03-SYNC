@@ -10,6 +10,9 @@
 #include <unordered_map>
 using namespace std;
 
+//extern vector<int> periodicLookup;
+
+
 template <class Type> class MCvar {
 
 // Data
@@ -67,9 +70,11 @@ public:
 
                 double res_avg_sqr = Avrg()*Avrg();
                 double res2_avg = SqrAvrg();
-
+                //cout << res2 << endl;
                 double SDOM = sqrt( (res2_avg - res_avg_sqr) / (no_of_bins - 1) );
 
                 return SDOM;
+
+                //test check
         }
 };
