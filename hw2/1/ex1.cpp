@@ -6,29 +6,37 @@
 
 using namespace std;
 
-// define our f(x) which we'd like to integrate.
+// Define our f(x) which we'd like to integrate. For 1.1, we use exp(-x). For 1.2, we use exp(-x*x)
 double f_x(double x){
 	return exp(-x*x);
 }
 
-// Define the integral f(x) from 0-1 to create the normalizing weighting func.
+// Write the definite integral f(x) from 0-1 to create the normalizing weighting func. This is for 1.1. 
 double weight = (exp(1) - 1) / exp(1);
 
-// The weighting func itself
+// The weighting func itself, g(x). We use g(x) = exp(-x) since it is 'similar' to the integral we actually want to estimate. 
 double g_x(double x){
 	return exp(-x) / weight;
 }
 
-// The integral of the weigh func, inverse, to use a normal dist [0,1] on.
+// The integral of the weigh func, inversed, G^-1(x), to apply a normal distribution on [0,1]. 
 double G_inv(double u){
 	return -log(1 - (u * (weight)));
 }
 
+
+// Begin the actual calculations.
 int main(){
 
+
+	// We define the known integral results to compare to later. Int1 is exp(-x) on [0,1], Int2 is exp(-x*x) on [0,10].
 	double int1known = 0.6321205588285576784044762298385391325541888689682321654;
 	double int2known = 0.9999546000702375151484644;
+	
+	// This is for 1.2 when I want to replace the weighting.
 	weight = int2known;
+	
+	// RNG related code. Initiating a random device to get a random seed, which is used for the twister engine.. 
 	random_device rand;
 	seed_seq seed{rand(), rand(), rand(), rand(), rand(), rand(), rand()};
 	mt19937 eng(seed);
@@ -38,21 +46,26 @@ int main(){
 	// Initialize number of steps, and the sum at 0.
 	int n = 5;
 	double summa = 0;
-	cout << setprecision(10) << weight << endl;
+
+	// Looping number of steps...
 	for (int i = 0; i < n; i++){
 
+		// u is randomly generated on [0,1]
 		double u = dist(eng);
 		cout << u << endl;
+		// We get an value of x from G^-1(u) = x
 		double xval = G_inv(u);
-		cout << "xvals: " << xval << endl;
+		// Add to the sum the estimated point.
 		summa += f_x(xval)/g_x(xval);
-		cout << "summas: " << summa << endl << endl;
-
+		cout << "summa:" << summa << endl;
 	}
 
+	// Find the result by dividing the sum by the number of steps, basically averaging. 
 	double integ = summa/n;
+	
+	cout << setprecision(10) << weight << endl;
 	cout << "Integral estiamte: " << integ << endl;
-	//cout << "Integral precision :" << abs(integ - 0.886227) << endl;
+	cout << "Integral precision: " << abs(integ - int1known) << endl;
 
 	ofstream file;
 	file.open("dat.csv");

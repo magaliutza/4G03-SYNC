@@ -1,0 +1,2 @@
+Temp, Energy, Mag_Sq, Energy_Sq, Err_E, Err_E_Sq, Err_Mag_Sq
+2.26,-3583.25,2.55777e+06,1.28644e+07,14.6106,157103,104529,
