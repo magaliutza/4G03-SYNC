@@ -10,9 +10,6 @@
 #include <unordered_map>
 using namespace std;
 
-//extern vector<int> periodicLookup;
-
-
 template <class Type> class MCvar {
 
 // Data
